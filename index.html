@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Baby 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #ffd6ec, #ffffff);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    color: #ff8fcf;
+    animation: floatUp 6s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* Sparkles */
+.decor {
+    position: fixed;
+    font-size: 30px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.5; transform: scale(1.2) rotate(10deg); }
+}
+
+/* Pages */
+.page {
+    position: absolute;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.page.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    color: #ff69b4;
+    font-size: 2.2em;
+}
+
+button {
+    margin-top: 25px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    background-color: #ffb3d9;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #ff69b4;
+    transform: scale(1.08);
+}
+
+.reply {
+    margin-top: 15px;
+    color: #ff69b4;
+    font-weight: bold;
+}
+
+/* Envelope */
+.envelope {
+    width: 220px;
+    height: 140px;
+    background: #ffe6f0;
+    margin: 40px auto;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(255,105,180,0.3);
+    cursor: pointer;
+    perspective: 600px;
+    z-index: 2;
+}
+
+.flap {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 80px solid #ffcce6;
+    top: -80px;
+    transform-origin: bottom center;
+    transform: rotateX(0deg);
+    transition: transform 0.8s ease;
+}
+
+.flap::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -50px;
+    width: 100px;
+    height: 10px;
+    background: #ff69b4;
+    border-radius: 5px;
+}
+
+.envelope.open .flap {
+    transform: rotateX(-180deg);
+    z-index: 3;
+}
+
+/* Letter */
+.letter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 60%);
+    width: 90%;
+    max-width: 480px;
+    padding: 20px;
+    background: #fff0f5;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(255,105,180,0.3);
+    max-height: 65vh;
+    overflow-y: auto;
+    font-family: 'Pacifico', cursive;
+    font-size: 1em;
+    line-height: 1.6em;
+    color: #d6336c;
+    border: 2px dashed #ffb3d9;
+    text-align: left;
+    opacity: 0;
+    transition: all 0.8s ease;
+    z-index: 1;
+}
+
+.envelope.open ~ .letter {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    z-index: 5;
+}
+</style>
+</head>
+<body>
+
+<div class="decor" style="top: 15px; left:15px;">✨🌸</div>
+<div class="decor" style="bottom:15px; right:15px;">🎀✨</div>
+<div class="decor" style="top:10px; right:25px;">🌸🎀</div>
+<div class="decor" style="bottom:10px; left:25px;">✨🌸</div>
+<div class="decor" style="top:50%; left:5%;">💫✨</div>
+<div class="decor" style="bottom:50%; right:10%;">✨🎀</div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <h1>hi baby!</h1>
+    <button onclick="replyHello()">hellooo! 💕</button>
+    <div class="reply" id="reply1"></div>
+
+    <!-- Hidden playlist -->
+    <audio id="bgMusic" preload="auto" style="display:none"></audio>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <h1>so, i made this cuz i wanna tell u something :p</h1>
+    <button onclick="nextPage(3)">what is it baby?</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+        <div class="flap"></div>
+    </div>
+
+    <div class="letter">
+        <p>
+       Happy Valentines Day my baby! >< <br><br> 
+
+I wanted this to be hand written but i cant since ure so far away, thats why i thought this would be a good backup plan:3 anyway baby, I js wanna tell you how much i appreciate you. Thank you for making me feel loved and appreciated, for making me genuinely happy, for making my days brighter, and for just being the amazing person that u are : ) Thank you for making my life so much better just by being in it and for making life feel a lot easier. I appreciate everything u do for me, even the little things. Thank you for being the person i can come running to whenever things feel heavy, u are my safe place. I'll always be grateful to have you baby and I will forever cherish you. You are the best blessing that I've ever received and no words will ever be able to express how grateful I am to have you. I love you so much baby, I hope Im making you happy just like how u make me or even happier. 
+
+I want my love for you be something that you dont have to question. I want you to know that I love you genuiunely and that I'll keep on choosing you without a single doubt in mind. You are loved, appreciated, and valued by me baby. I hope you know that you're secured with me, u dont have to keep ur defenses up and just let ur guard down with me. You're safe here baby, u can trust me fully and not worry about me breaking it. I love you genuiunely baby. I'm not here as someone temporary, I'm here to grow with you and that means I'll stay no matter how hard things get. Through our ups and downs, I'll stay with you. No matter how hard it gets, I'll stay and always choose to fix things with you because I want it to be you, I want it to be us. No matter what challenges we have to go through, I want u to know that I'll stay and face it with you. We'll get through it all together. 
+
+You've given me something I never knew I needed — something that made me want to feel alive and be better as a person. Loving you feels easy, something that I naturally do — just like breathing. I don't have to force myself to do it because it just comes naturally without me noticing. I love you more than my video games : D hehe, You're everything I wanted baby. I pray God keeps you safe all the time and protect our relationship. I wanna be with you forever baby, I wanna grow old with you and make a lot of memories together so that we'll have something to look back to when we get older :p Thank you for being my best friend and lover at the same time. No amount of words will ever be enough to fully express how i truly love you baby. 
+
+Also, I'm always proud you baby : ) I'm proud of you for handling life even when the world is being mean to you. Please know that you're not alone anymore lovey, when things are too much for you to handle and everything feels heavy, let me be there for u baby okay? I know you can handle it alone because you're strong but please let me. U can be vulnerable with me and I'll handle you gnetly and patiently. Let me be the one to rub ur back, wipe ur tears, and be ur shoulder to cry on. You'll always have me baby and I'm here for you always. 
+
+I LOVE YOU THE MOST MY PRETTY BABY >< 
+        </p>
+    </div>
+</div>
+
+<script>
+function replyHello() {
+    document.getElementById("reply1").innerText = "hellooo!";
+
+    // Playlist with example songs (replace with your MP3s)
+    const playlist = [
+        "Bruno Major - Nothing (Lyric & Chord Video).mp3",
+        "Taylor Swift - So High School (Lyrics).mp3",
+        "Rico Blanco - Your Universe (LyricsLetra).mp3",
+        "20200819 She Get The Gold Star.mp3",
+        "Rico Blanco - Balisong Transformed 2016.mp3",
+        "Youre here thats the thing.mp3"
+    ];
+    let currentSong = 0;
+    const audio = document.getElementById("bgMusic");
+
+    function playNextSong() {
+        audio.src = playlist[currentSong];
+        audio.play().catch(() => console.log("User click needed."));
+        currentSong++;
+        if(currentSong >= playlist.length) currentSong = 0; // loop playlist
+    }
+
+    audio.addEventListener("ended", playNextSong);
+
+    // start playlist
+    playNextSong();
+
+    setTimeout(() => nextPage(2), 1000);
+}
+
+function nextPage(num) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById("page"+num).classList.add('active');
+}
+
+function openEnvelope() {
+    document.getElementById("envelope").classList.add("open");
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 40 + 20) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 500);
+
+document.querySelectorAll('.decor').forEach((sparkle) => {
+    const delay = Math.random() * 3;
+    const duration = 2 + Math.random() * 2;
+    sparkle.style.animation = `twinkle ${duration}s ease-in-out ${delay}s infinite`;
+});
+</script>
+
+</body>
+</html>
