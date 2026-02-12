@@ -180,8 +180,8 @@ button:hover {
     <div class="reply" id="reply1"></div>
     <button onclick="startPlaylist()" style="margin-top: 10px;">Play Our Playlist 🎶</button>
 
-    <!-- Hidden playlist -->
-    <audio id="bgMusic" preload="auto" style="display:none"></audio>
+    <!-- Visible audio controls for debugging (remove style="display:block" later) -->
+    <audio id="bgMusic" controls preload="auto" style="display:block; margin-top: 10px;"></audio>
 </div>
 
 <!-- PAGE 2 -->
@@ -232,20 +232,21 @@ function startPlaylist() {
     const audio = document.getElementById("bgMusic");
 
     function playNextSong() {
+        if (currentSong >= playlist.length) currentSong = 0; // loop playlist
         audio.src = playlist[currentSong];
-        audio.load(); // Force reload to ensure it tries to load
+        audio.load(); // Force reload
         audio.play().then(() => {
             console.log(`Playing: ${playlist[currentSong]}`);
+            currentSong++; // Only increment on success
         }).catch((error) => {
-            console.log(`Playback failed or blocked for: ${playlist[currentSong]} - ${error.message}`);
-            // Optionally, you could add a retry or user prompt here
+            console.log(`Playback failed for: ${playlist[currentSong]} - ${error.message}. Trying next song...`);
+            currentSong++; // Skip to next on failure
+            setTimeout(playNextSong, 1000); // Retry after 1 second
         });
-        currentSong++;
-        if (currentSong >= playlist.length) currentSong = 0; // loop playlist
     }
 
     audio.addEventListener("ended", playNextSong);
-    playNextSong(); // Start immediately on button click
+    playNextSong(); // Start
 }
 
 function nextPage(num) {
@@ -279,4 +280,3 @@ document.querySelectorAll('.decor').forEach((sparkle) => {
 
 </body>
 </html>
-
